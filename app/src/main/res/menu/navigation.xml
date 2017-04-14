@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_sakura"
+        android:icon="@drawable/item_sakura"
+        android:title="@string/sakura"/>
+
+    <item
+        android:id="@+id/navigation_memories"
+        android:icon="@drawable/ic_cloud_white_48dp"
+        android:title="@string/memories"/>
+
+    <item
+        android:id="@+id/navigation_garden"
+        android:icon="@drawable/item_garden"
+        android:title="@string/garden"/>
+
+</menu>
