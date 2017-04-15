@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 
+import xyz.matteobattilana.library.WeatherView;
+
 public class SakuraActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
 
@@ -14,5 +16,8 @@ public class SakuraActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        WeatherView mWeatherView = (WeatherView) findViewById(R.id.weather);
+        mWeatherView.startAnimation();
     }
 }

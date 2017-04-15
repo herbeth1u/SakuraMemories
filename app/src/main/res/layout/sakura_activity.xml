@@ -11,14 +11,30 @@
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/sakura"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/snowOverlay"/>
+
+        <xyz.matteobattilana.library.WeatherView
+            android:id="@+id/weather"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:angle="-3"
+            app:fadeOutTime="10000"
+            app:fps="60"
+            app:lifeTime="10000"
+            app:numParticles="40"
+            app:orientationMode="ENABLE"
+            app:startingWeather="SNOW"/>
 
     </FrameLayout>
 
