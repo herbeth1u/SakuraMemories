@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.booboot.sakuramemories.SakuraActivity">
+    tools:context="com.booboot.sakuramemories.activity.SakuraActivity">
 
     <FrameLayout
         android:id="@+id/content"
@@ -20,21 +20,14 @@
             android:src="@drawable/sakura"/>
 
         <View
+            android:id="@+id/weatherOverlay"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/snowOverlay"/>
+            android:layout_height="match_parent"/>
 
         <xyz.matteobattilana.library.WeatherView
-            android:id="@+id/weather"
+            android:id="@+id/weatherView"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            app:angle="-3"
-            app:fadeOutTime="10000"
-            app:fps="60"
-            app:lifeTime="10000"
-            app:numParticles="40"
-            app:orientationMode="ENABLE"
-            app:startingWeather="SNOW"/>
+            android:layout_height="1dp"/>
 
     </FrameLayout>
 
