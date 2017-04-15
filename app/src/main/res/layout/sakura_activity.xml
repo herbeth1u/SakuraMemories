@@ -8,31 +8,21 @@
     android:orientation="vertical"
     tools:context="com.booboot.sakuramemories.activity.SakuraActivity">
 
-    <FrameLayout
-        android:id="@+id/content"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/sakura"/>
-
-        <View
-            android:id="@+id/weatherOverlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <xyz.matteobattilana.library.WeatherView
-            android:id="@+id/weatherView"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-
-    </FrameLayout>
+    <!-- The cloud which emits rain and snow is outside fragments because there are bugs with the ParticleSystem inside a ViewPager -->
+    <View
+        android:id="@+id/cloud"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -42,5 +32,4 @@
         app:itemIconTint="@drawable/navigation_item_color"
         app:itemTextColor="@drawable/navigation_item_color"
         app:menu="@menu/navigation"/>
-
 </RelativeLayout>
