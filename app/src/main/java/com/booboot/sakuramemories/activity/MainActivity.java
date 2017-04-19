@@ -13,14 +13,14 @@ import android.view.MenuItem;
 import com.booboot.sakuramemories.R;
 import com.booboot.sakuramemories.adapter.BottomNavigationAdapter;
 
-public class SakuraActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sakura_activity);
+        setContentView(R.layout.main_activity);
 
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottomNavigation);
         viewPager = (ViewPager) findViewById(R.id.viewPager);

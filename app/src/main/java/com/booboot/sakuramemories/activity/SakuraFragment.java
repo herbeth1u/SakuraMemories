@@ -14,49 +14,28 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 
 import com.booboot.sakuramemories.R;
+import com.booboot.sakuramemories.util.Weather;
 import com.plattysoft.leonids.ParticleSystem;
 
 public class SakuraFragment extends Fragment {
     public static final String WEATHER_START_INTENT = "WEATHER_START_INTENT";
     public static final String WEATHER_STOP_INTENT = "WEATHER_STOP_INTENT";
-    private View cloud;
-    private ParticleSystem particleSystem;
+    private Weather weather;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.sakura_fragment, container, false);
 
-        cloud = getActivity().findViewById(R.id.cloud);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(messageReceiver, new IntentFilter(WEATHER_START_INTENT));
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(messageReceiver, new IntentFilter(WEATHER_STOP_INTENT));
-        startWeather();
+        weather = new Weather(getActivity(), this, getActivity().findViewById(R.id.cloud), rootView.findViewById(R.id.weatherOverlay));
 
         return rootView;
     }
 
-    private void startWeather() {
-        particleSystem = new ParticleSystem(getActivity(), 30 * 8000 / 1000, R.drawable.rain, 8000)
-                .setAcceleration(0.00013f, 90 - (-6))
-                .setInitialRotationRange(-6, 6)
-                .setSpeedByComponentsRange(0f, 0f, 0.05f, 0.1f)
-                //.setSpeedRange(0.2f, 0.5f)
-                .setFadeOut(7000, new AccelerateInterpolator());
-
-        cloud.post(new Runnable() {
-            @Override
-            public void run() {
-                particleSystem.emitWithGravity(cloud, Gravity.BOTTOM, 30);
-            }
-        });
-    }
-
-    private void stopWeather() {
-        if (particleSystem != null) particleSystem.cancel();
-    }
-
     @Override
     public void onDestroyView() {
-        stopWeather();
+        weather.stopWeather();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(messageReceiver);
         super.onDestroyView();
     }
@@ -66,11 +45,11 @@ public class SakuraFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             switch (intent.getAction()) {
                 case WEATHER_START_INTENT:
-                    startWeather();
+                    weather.startWeather();
                     break;
 
                 case WEATHER_STOP_INTENT:
-                    stopWeather();
+                    weather.stopWeather();
                     break;
             }
         }
