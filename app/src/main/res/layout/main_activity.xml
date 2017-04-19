@@ -15,6 +15,11 @@
         android:layout_alignParentTop="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+    <View
+        android:id="@+id/weatherOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <!-- The cloud which emits rain and snow is outside fragments because there are bugs with the ParticleSystem inside a ViewPager -->
     <View
         android:id="@+id/cloud"

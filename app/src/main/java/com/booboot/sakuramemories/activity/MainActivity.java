@@ -1,21 +1,20 @@
 package com.booboot.sakuramemories.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.booboot.sakuramemories.R;
 import com.booboot.sakuramemories.adapter.BottomNavigationAdapter;
+import com.booboot.sakuramemories.util.Weather;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigation;
+    private Weather weather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +28,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         BottomNavigationAdapter adapter = new BottomNavigationAdapter(getFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);
+
+        weather = new Weather(this, findViewById(R.id.cloud), findViewById(R.id.weatherOverlay));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (viewPager.getCurrentItem() == 0) {
+            weather.startWeather();
+        }
     }
 
     @Override
@@ -53,16 +63,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void onPageSelected(int position) {
-        Log.e("D", "onPageSelected");
         if (position != 0) {
-            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(SakuraFragment.WEATHER_STOP_INTENT));
+            weather.stopWeather();
         } else {
-            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(SakuraFragment.WEATHER_START_INTENT));
+            weather.startWeather();
         }
         bottomNavigation.getMenu().getItem(position).setChecked(true);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
+    protected void onDestroy() {
+        weather.stopWeather();
+        super.onDestroy();
     }
 }

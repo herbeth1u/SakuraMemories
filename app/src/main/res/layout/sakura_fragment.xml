@@ -10,8 +10,4 @@
         android:scaleType="centerCrop"
         android:src="@drawable/sakura"/>
 
-    <View
-        android:id="@+id/weatherOverlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 </FrameLayout>

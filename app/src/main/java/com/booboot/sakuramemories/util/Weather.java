@@ -34,18 +34,15 @@ public class Weather {
     public static final int SNOW_ANGLE = 0;
 
     private Activity activity;
-    private Fragment fragment;
     private View anchor, weatherOverlay;
     private ParticleSystem particleSystem;
     private int weather;
 
-    public Weather(Activity activity, Fragment fragment, View anchor, View weatherOverlay) {
+    public Weather(Activity activity, View anchor, View weatherOverlay) {
         this.activity = activity;
-        this.fragment = fragment;
         this.anchor = anchor;
         this.weatherOverlay = weatherOverlay;
         this.weather = getWeather();
-        startWeather();
     }
 
     private static int getWeather() {
@@ -114,5 +111,6 @@ public class Weather {
 
     public void stopWeather() {
         if (particleSystem != null) particleSystem.cancel();
+        weatherOverlay.setBackgroundColor(0);
     }
 }
