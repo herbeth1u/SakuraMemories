@@ -1,8 +1,6 @@
 package com.booboot.sakuramemories.util;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -60,38 +58,45 @@ public class Weather {
         else return SUN;
     }
 
-    public ParticleSystem startWeather() {
-        stopWeather();
+    public ParticleSystem startWeather(boolean particles) {
+        // stopWeather();
+        if (particleSystem != null) return particleSystem;
 
         switch (weather) {
             case RAIN:
                 weatherOverlay.setBackgroundColor(activity.getResources().getColor(R.color.rainOverlay));
-                particleSystem = new ParticleSystem(activity, RAIN_PARTICLES * LIFETIME / 1000, R.drawable.rain, LIFETIME)
-                        .setAcceleration(0.00013f, 90 - RAIN_ANGLE)
-                        .setInitialRotationRange(RAIN_ANGLE, -RAIN_ANGLE)
-                        .setSpeedByComponentsRange(0f, 0f, 0.05f, 0.1f)
-                        .setFadeOut(FADE_OUT, new AccelerateInterpolator());
+                if (particles) {
+                    particleSystem = new ParticleSystem(activity, RAIN_PARTICLES * LIFETIME / 1000, R.drawable.rain_particle, LIFETIME)
+                            .setAcceleration(0.00013f, 90 - RAIN_ANGLE)
+                            .setInitialRotationRange(RAIN_ANGLE, -RAIN_ANGLE)
+                            .setSpeedByComponentsRange(0f, 0f, 0.05f, 0.1f)
+                            .setFadeOut(FADE_OUT, new AccelerateInterpolator());
 
-                anchor.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        particleSystem.emitWithGravity(anchor, Gravity.BOTTOM, RAIN_PARTICLES);
-                    }
-                });
+                    anchor.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (particleSystem == null) return;
+                            particleSystem.emitWithGravity(anchor, Gravity.BOTTOM, RAIN_PARTICLES);
+                        }
+                    });
+                }
                 break;
 
             case SNOW:
                 weatherOverlay.setBackgroundColor(activity.getResources().getColor(R.color.snowOverlay));
-                particleSystem = new ParticleSystem(activity, SNOW_PARTICLES * LIFETIME / 1000, R.drawable.snow, LIFETIME)
-                        .setSpeedByComponentsRange(0f, 0f, 0.05f, 0.1f)
-                        .setFadeOut(FADE_OUT, new AccelerateInterpolator());
+                if (particles) {
+                    particleSystem = new ParticleSystem(activity, SNOW_PARTICLES * LIFETIME / 1000, R.drawable.snow_particle, LIFETIME)
+                            .setSpeedByComponentsRange(0f, 0f, 0.05f, 0.1f)
+                            .setFadeOut(FADE_OUT, new AccelerateInterpolator());
 
-                anchor.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        particleSystem.emitWithGravity(anchor, Gravity.BOTTOM, SNOW_PARTICLES);
-                    }
-                });
+                    anchor.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (particleSystem == null) return;
+                            particleSystem.emitWithGravity(anchor, Gravity.BOTTOM, SNOW_PARTICLES);
+                        }
+                    });
+                }
                 break;
 
             case MIST:
@@ -109,8 +114,15 @@ public class Weather {
         return particleSystem;
     }
 
+    public ParticleSystem startWeather() {
+        return startWeather(true);
+    }
+
     public void stopWeather() {
-        if (particleSystem != null) particleSystem.cancel();
+        if (particleSystem != null) {
+            particleSystem.cancel();
+            particleSystem = null;
+        }
         weatherOverlay.setBackgroundColor(0);
     }
 }

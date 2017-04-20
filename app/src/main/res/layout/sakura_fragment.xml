@@ -1,13 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:id="@+id/content"
+<android.support.design.widget.CoordinatorLayout android:id="@+id/content"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/sakura"/>
 
-</FrameLayout>
+    <View
+        android:id="@+id/weatherOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <!-- The cloud which emits rain and snow is outside fragments because there are bugs with the ParticleSystem inside a ViewPager -->
+
+    <View
+        android:id="@+id/cloud"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <FrameLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="top|end"
+        android:clipToPadding="false"
+        android:padding="15dp">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/rain"
+            app:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:rippleColor="@color/colorPrimary"/>
+    </FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

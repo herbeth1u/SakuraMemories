@@ -1,20 +1,20 @@
 package com.booboot.sakuramemories.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.booboot.sakuramemories.R;
 import com.booboot.sakuramemories.adapter.BottomNavigationAdapter;
-import com.booboot.sakuramemories.util.Weather;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigation;
-    private Weather weather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +29,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);
 
-        weather = new Weather(this, findViewById(R.id.cloud), findViewById(R.id.weatherOverlay));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (viewPager.getCurrentItem() == 0) {
-            weather.startWeather();
-        }
+    public boolean isSakuraFragmentSelected() {
+        return viewPager.getCurrentItem() == 0;
     }
 
     @Override
@@ -59,25 +53,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if (position == 0 && positionOffset == 0 && positionOffsetPixels == 0) {
+            /* Avoids a bug with Leonids inside a ViewPager, by starting the particles only when the fragment is completely shown */
+            LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(new Intent(SakuraFragment.WEATHER_START_INTENT));
+        }
     }
 
     @Override
-    public void onPageSelected(int position) {
+    public void onPageSelected(final int position) {
         if (position != 0) {
-            weather.stopWeather();
+            LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(new Intent(SakuraFragment.WEATHER_STOP_INTENT));
         } else {
-            weather.startWeather();
+            LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(new Intent(SakuraFragment.WEATHER_START_NO_PARTICLE_INTENT));
         }
         bottomNavigation.getMenu().getItem(position).setChecked(true);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-    }
-
-    @Override
-    protected void onDestroy() {
-        weather.stopWeather();
-        super.onDestroy();
     }
 }

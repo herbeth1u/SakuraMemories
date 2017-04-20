@@ -18,7 +18,7 @@ public class MemoriesFragment extends Fragment {
 
         ImageView background = (ImageView) rootView.findViewById(R.id.background);
         Picasso.with(getActivity()).load(R.drawable.grass).centerCrop().fit().into(background);
-        Log.e("D", "MEMORIES FRAGMENT");
+
         return rootView;
     }
 }
