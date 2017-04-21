@@ -125,4 +125,15 @@ public class Weather {
         }
         weatherOverlay.setBackgroundColor(0);
     }
+
+    public int getIcon() {
+        switch (weather) {
+            case RAIN:
+                return R.drawable.rain;
+            case SNOW:
+                return R.drawable.snow;
+            default:
+                return R.drawable.sunny;
+        }
+    }
 }
