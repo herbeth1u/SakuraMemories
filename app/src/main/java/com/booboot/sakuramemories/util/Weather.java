@@ -28,7 +28,7 @@ public class Weather {
     public static final int FADE_OUT = 7000;
     public static final int RAIN_PARTICLES = 30;
     public static final int SNOW_PARTICLES = 10;
-    public static final int RAIN_ANGLE = -6;
+    public static final int RAIN_ANGLE = 10;
     public static final int SNOW_ANGLE = 0;
 
     private Activity activity;
@@ -68,8 +68,8 @@ public class Weather {
                 if (particles) {
                     particleSystem = new ParticleSystem(activity, RAIN_PARTICLES * LIFETIME / 1000, R.drawable.rain_particle, LIFETIME)
                             .setAcceleration(0.00013f, 90 - RAIN_ANGLE)
-                            .setInitialRotationRange(RAIN_ANGLE, -RAIN_ANGLE)
-                            .setSpeedByComponentsRange(0f, 0f, 0.05f, 0.1f)
+                            .setInitialRotationRange(RAIN_ANGLE, RAIN_ANGLE)
+                            .setSpeedByComponentsRange(-0.05f, -0.1f, 0.15f, 0.3f)
                             .setFadeOut(FADE_OUT, new AccelerateInterpolator());
 
                     anchor.post(new Runnable() {
