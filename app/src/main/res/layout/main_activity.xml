@@ -22,9 +22,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        app:elevation="20dp"
         android:background="@color/colorAccentLightTransparent"
-        android:elevation="30dp"
         app:itemIconTint="@drawable/navigation_item_color"
         app:itemTextColor="@drawable/navigation_item_color"
         app:menu="@menu/navigation"/>
+
+    <include layout="@layout/screen_loading"/>
 </RelativeLayout>

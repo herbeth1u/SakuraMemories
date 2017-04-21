@@ -9,6 +9,7 @@
     <color name="colorAccentVeryDark">#689F38</color>
 
     <color name="black">#000000</color>
+    <color name="transparentBlack">#96000000</color>
     <color name="white">#FFFFFF</color>
     <color name="rainOverlay">#82444444</color>
     <color name="snowOverlay">#64cccccc</color>

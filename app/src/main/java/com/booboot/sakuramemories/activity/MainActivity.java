@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.navigation_sakura:
                 viewPager.setCurrentItem(0);
                 break;
-            case R.id.navigation_memories:
+            case R.id.navigation_garden:
                 viewPager.setCurrentItem(1);
                 break;
-            case R.id.navigation_garden:
+            case R.id.navigation_memories:
                 viewPager.setCurrentItem(2);
                 break;
         }
