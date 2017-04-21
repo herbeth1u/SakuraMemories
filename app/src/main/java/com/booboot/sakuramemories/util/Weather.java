@@ -48,14 +48,14 @@ public class Weather {
         int hash;
         try {
             Date todayWithZeroTime = formatter.parse(formatter.format(new Date()));
-            hash = todayWithZeroTime.hashCode();
+            hash = todayWithZeroTime.hashCode() % 10;
         } catch (ParseException e) {
             return SUN;
         }
 
-        if (hash % 5 == 0) return SNOW;
-        else if (hash % 3 == 0) return RAIN;
-        else return SUN;
+        if (hash >= 0 && hash <= 4) return SUN; // 50%
+        else if (hash >= 5 && hash <= 7) return RAIN; // 30%
+        else return SNOW; // 20%
     }
 
     public ParticleSystem startWeather(boolean particles) {
