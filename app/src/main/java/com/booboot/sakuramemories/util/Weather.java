@@ -23,12 +23,15 @@ public class Weather {
     public static final int SNOW = 3;
     public static final int MIST = 4;
     public static final int CLOUDS = 5;
+    public static final int SAKURA = 6;
 
     public static final int LIFETIME = 8000;
     public static final int FADE_OUT = 7000;
     public static final int RAIN_PARTICLES = 30;
     public static final int SNOW_PARTICLES = 10;
+    public static final int SAKURA_PARTICLES = 5;
     public static final int RAIN_ANGLE = 10;
+    public static final int SAKURA_ANGLE = 45;
     public static final int SNOW_ANGLE = 0;
 
     private Activity activity;
@@ -54,8 +57,9 @@ public class Weather {
         }
 
         if (hash >= 0 && hash <= 4) return SUN; // 50%
-        else if (hash >= 5 && hash <= 7) return RAIN; // 30%
-        else return SNOW; // 20%
+        else if (hash >= 5 && hash <= 6) return RAIN; // 20%
+        else if (hash >= 7 && hash <= 8) return SNOW; // 20%
+        else return SAKURA; // 10%
     }
 
     public ParticleSystem startWeather(boolean particles) {
@@ -99,6 +103,24 @@ public class Weather {
                 }
                 break;
 
+            case SAKURA:
+                weatherOverlay.setBackgroundColor(activity.getResources().getColor(R.color.sunOverlay));
+                if (particles) {
+                    particleSystem = new ParticleSystem(activity, SAKURA_PARTICLES * LIFETIME / 1000, R.drawable.petal_particle, LIFETIME)
+                            .setInitialRotationRange(-SAKURA_ANGLE, SAKURA_ANGLE)
+                            .setSpeedByComponentsRange(-0.025f, 0.025f, 0.05f, 0.1f)
+                            .setFadeOut(FADE_OUT, new AccelerateInterpolator());
+
+                    anchor.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (particleSystem == null) return;
+                            particleSystem.emitWithGravity(anchor, Gravity.BOTTOM, SAKURA_PARTICLES);
+                        }
+                    });
+                }
+                break;
+
             case MIST:
                 weatherOverlay.setBackgroundColor(activity.getResources().getColor(R.color.snowOverlay));
                 break;
@@ -132,6 +154,8 @@ public class Weather {
                 return R.drawable.rain;
             case SNOW:
                 return R.drawable.snow;
+            case SAKURA:
+                return R.drawable.sakura_rain;
             default:
                 return R.drawable.sunny;
         }
